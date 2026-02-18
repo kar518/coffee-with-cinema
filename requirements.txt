@@ -1,0 +1,5 @@
+flask
+requests
+reportlab
+python-docx
+Flask-Session

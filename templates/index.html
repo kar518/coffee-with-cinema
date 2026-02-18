@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee-with-Cinema | AI Pre-Production Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-film"></i>
+                <h2>CinemaAI</h2>
+            </div>
+            
+            <nav>
+                <button class="nav-btn active" data-target="story-input-section">
+                    <i class="fas fa-pen-nib"></i> Story Concept
+                </button>
+                <button class="nav-btn disabled" id="nav-screenplay" data-target="screenplay-section">
+                    <i class="fas fa-scroll"></i> Screenplay
+                </button>
+                <button class="nav-btn disabled" id="nav-characters" data-target="characters-section">
+                    <i class="fas fa-user-mask"></i> Characters
+                </button>
+                <button class="nav-btn disabled" id="nav-director" data-target="director-section">
+                    <i class="fas fa-video"></i> Director Mode
+                </button>
+                <button class="nav-btn disabled" id="nav-sound" data-target="sound-section">
+                    <i class="fas fa-music"></i> Sound Design
+                </button>
+                <button class="nav-btn disabled" id="nav-pitch" data-target="pitch-section">
+                    <i class="fas fa-briefcase"></i> Pitch Deck
+                </button>
+            </nav>
+
+            <div class="footer-note">
+                <p>Augmenting Creativity</p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
+            
+            <!-- LOADING OVERLAY -->
+            <div id="loading-overlay" class="hidden">
+                <div class="spinner"></div>
+                <h3 id="loading-text">Crafting cinematic vision...</h3>
+            </div>
+
+            <!-- SECTION 1: STORY INPUT -->
+            <section id="story-input-section" class="active-section">
+                <div class="hero-text">
+                    <h1>Pre-Production Intelligence</h1>
+                    <p>Transform your idea into a production-ready package.</p>
+                </div>
+
+                <div class="input-form">
+                    <div class="form-group">
+                        <label>Genre & Mood</label>
+                        <select id="genre-select">
+                            <option value="noir">Noir (Shadows, Mystery, Cynicism)</option>
+                            <option value="thriller">Thriller (Suspense, Tension, Pacing)</option>
+                            <option value="sci-fi">Sci-Fi (Futuristic, Tech, Philosophy)</option>
+                            <option value="horror">Horror (Fear, Isolation, Dread)</option>
+                            <option value="romance">Romance (Emotion, Connection, Heart)</option>
+                            <option value="comedy">Comedy (Wit, Timing, Levity)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Story Concept</label>
+                        <textarea id="story-input" placeholder="Enter your logline or story idea here..."></textarea>
+                    </div>
+
+                    <button id="generate-btn" class="cta-btn">
+                        <i class="fas fa-magic"></i> Generate Screenplay
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION 2: SCREENPLAY -->
+            <section id="screenplay-section" class="hidden-section">
+                <div class="section-header">
+                    <h2>Screenplay <span class="genre-tag" id="display-genre">NOIR</span></h2>
+                    <div class="actions">
+                        <button class="secondary-btn" onclick="generateNext('characters')">Next: Characters <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="document-viewer screenplay-font" id="screenplay-content">
+                    <!-- Content injected here -->
+                </div>
+            </section>
+
+            <!-- SECTION 3: CHARACTERS -->
+            <section id="characters-section" class="hidden-section">
+                <div class="section-header">
+                    <h2>Character Profiles</h2>
+                    <div class="actions">
+                        <button class="secondary-btn" onclick="generateNext('director_mode')">Next: Director Mode <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="document-viewer" id="characters-content"></div>
+            </section>
+
+            <!-- SECTION 4: DIRECTOR MODE -->
+            <section id="director-section" class="hidden-section">
+                <div class="section-header">
+                    <h2>Director's Shot Breakdown</h2>
+                    <div class="actions">
+                        <button class="secondary-btn" onclick="generateNext('sound_design')">Next: Sound Design <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="document-viewer" id="director-content"></div>
+            </section>
+
+            <!-- SECTION 5: SOUND DESIGN -->
+            <section id="sound-section" class="hidden-section">
+                <div class="section-header">
+                    <h2>Soundscape Design</h2>
+                    <div class="actions">
+                        <button class="secondary-btn" onclick="generateNext('pitch_deck')">Next: Pitch Deck <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="document-viewer" id="sound-content"></div>
+            </section>
+
+            <!-- SECTION 6: PITCH DECK -->
+            <section id="pitch-section" class="hidden-section">
+                <div class="section-header">
+                    <h2>Investor Pitch Deck</h2>
+                    <div class="actions">
+                        <a href="/export/pdf" class="cta-btn"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                        <a href="/export/docx" class="secondary-btn"><i class="fas fa-file-word"></i> DOCX</a>
+                    </div>
+                </div>
+                <div class="document-viewer" id="pitch-content"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
