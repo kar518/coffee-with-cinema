@@ -3,3 +3,5 @@ requests
 reportlab
 python-docx
 Flask-Session
+streamlit
+google-generativeai
