@@ -85,6 +85,25 @@ model = genai.GenerativeModel(f"models/{model_choice}")
 st.title("🎬 Coffee-with-Cinema")
 st.subheader("AI Cinematic Pre-Production Studio")
 
+with st.expander("📖 About Coffee-with-Cinema"):
+    st.markdown("""
+    **Coffee-with-Cinema** is an AI-powered cinematic pre-production assistant.
+
+    It helps writers and directors transform raw ideas into:
+    - Structured screenplays  
+    - Character psychology breakdowns  
+    - Shot lists and director notes  
+    - Sound design plans  
+    - Investor-ready pitch decks  
+
+    Powered by Google Gemini, the system augments creative decision-making
+    by translating imagination into structured cinematic documentation.
+
+    This tool is designed to accelerate pre-production workflows and
+    help creators visualize their story before it reaches production.
+    """)
+
+
 st.markdown("---")
 
 story = st.text_area("Enter your story concept", height=150)
