@@ -1,37 +1,63 @@
-# Coffee-with-Cinema: AI Cinematic Pre-Production Studio
+# 🎬 Coffee-with-Cinema
+### ☕ AI Cinematic Pre-Production Studio
 
-An AI-powered web application that transforms a simple story idea into a complete cinematic pre-production package.
+---
 
-## Features
+## 🚀 Features
 
-- **Screenplay Generation**: Creates industry-standard screenplays based on genre and mood.
-- **Character Profiles**: Deep psychological analysis of characters.
-- **Director Mode**: Detailed shot breakdown, camera angles, and lighting suggestions.
-- **Sound Design**: Plan for music, ambient layers, and foley.
-- **Pitch Deck**: Investor-ready business proposal generator.
-- **Export**: Download your project bible as PDF or DOCX.
+### 🎞 Screenplay Generation
 
-## Setup Instructions
+- Generates structured, industry-style screenplays  
+- Supports genre and tone customization  
+- Proper scene formatting (INT/EXT, transitions, dialogue blocks)
 
-1.  **Prerequisites**:
-    - Python 3.8+
-    - [Ollama](https://ollama.ai/) installed and running (`ollama serve`).
-    - Pull the Granite model: `ollama pull granite-code:3b` (or update `MODEL_NAME` in `app.py` to your preferred model).
+---
 
-2.  **Installation**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+### 🎭 Character Profiles
 
-3.  **Run the Application**:
-    ```bash
-    python app.py
-    ```
+- Deep psychological character breakdown  
+- Motivations & internal conflicts  
+- Strengths & flaws  
+- Complete character arcs  
 
-4.  **Access cleanly**:
-    Open your browser and navigate to `http://localhost:5000`.
+---
 
-## Design Notes
+### 🎥 Director Mode
 
-This project uses a cinematic dark mode UI with glassmorphism effects to provide an immersive experience for filmmakers.
-The backend is powered by Flask and uses local LLM inference via Ollama for privacy and cost-efficiency.
+- Camera angles  
+- Shot types  
+- Lighting suggestions  
+- Color grading references  
+- Emotional tone direction  
+
+---
+
+### 🎵 Sound Design
+
+- Background score suggestions  
+- Ambient layering  
+- Foley detailing  
+- Emotional sound mapping  
+
+---
+
+### 💼 Pitch Deck Generator
+
+- Logline  
+- Synopsis  
+- Target audience  
+- Visual tone & references  
+- Investor-ready structure  
+
+---
+
+### 🌍 Multi-Language Support
+
+- Generate screenplay content in multiple languages  
+
+---
+
+### 📄 Export Options
+
+- PDF download  
+- DOCX export  
