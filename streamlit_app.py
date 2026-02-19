@@ -1,12 +1,34 @@
 import streamlit as st
 import google.generativeai as genai
+import replicate
+import os
 
 # ---------------------------------------------------
 # CONFIG
 # ---------------------------------------------------
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 st.set_page_config(page_title="Coffee-with-Cinema", layout="wide")
+
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+model_choice_default = "gemini-2.5-flash"
+
+# Replicate client (uses environment variable)
+client = replicate.Client()
+
+# ---------------------------------------------------
+# IMAGE GENERATION FUNCTION
+# ---------------------------------------------------
+
+def generate_image(prompt):
+    output = client.run(
+        "stability-ai/sdxl:latest",
+        input={
+            "prompt": prompt,
+            "width": 768,
+            "height": 512
+        }
+    )
+    return output[0]
 
 # ---------------------------------------------------
 # CINEMATIC DARK THEME
@@ -27,9 +49,6 @@ body {
     padding: 0.5rem 1.2rem;
     font-weight: 600;
 }
-.stSelectbox, .stTextArea {
-    background-color: #1E1E1E;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -47,7 +66,7 @@ if "director" not in st.session_state:
     st.session_state.director = ""
 
 # ---------------------------------------------------
-# SIDEBAR CONFIG
+# SIDEBAR
 # ---------------------------------------------------
 
 with st.sidebar:
@@ -70,39 +89,20 @@ with st.sidebar:
 
     model_choice = st.selectbox(
         "Model",
-        ["gemini-2.5-flash", "gemini-1.5-pro"]
+        ["gemini-2.5-flash", "gemini-1.5-pro"],
+        index=0
     )
 
     length = st.slider("Number of Scenes", 1, 6, 3)
 
-# Create model after selection
 model = genai.GenerativeModel(f"models/{model_choice}")
 
 # ---------------------------------------------------
-# MAIN AREA
+# MAIN UI
 # ---------------------------------------------------
 
 st.title("🎬 Coffee-with-Cinema")
 st.subheader("AI Cinematic Pre-Production Studio")
-
-with st.expander("📖 About Coffee-with-Cinema"):
-    st.markdown("""
-    **Coffee-with-Cinema** is an AI-powered cinematic pre-production assistant.
-
-    It helps writers and directors transform raw ideas into:
-    - Structured screenplays  
-    - Character psychology breakdowns  
-    - Shot lists and director notes  
-    - Sound design plans  
-    - Investor-ready pitch decks  
-
-    Powered by Google Gemini, the system augments creative decision-making
-    by translating imagination into structured cinematic documentation.
-
-    This tool is designed to accelerate pre-production workflows and
-    help creators visualize their story before it reaches production.
-    """)
-
 
 st.markdown("---")
 
@@ -190,15 +190,16 @@ Screenplay:
         st.session_state.director = response.text
 
 # ---------------------------------------------------
-# TABS OUTPUT
+# OUTPUT TABS
 # ---------------------------------------------------
 
 if st.session_state.screenplay:
-    tab1, tab2, tab3 = st.tabs(["🎞 Screenplay", "🎭 Characters", "🎥 Director"])
 
+    tab1, tab2, tab3 = st.tabs(["🎞 Screenplay", "🎭 Characters", "🎥 Director + Storyboard"])
+
+    # ---------------- SCREENPLAY ----------------
     with tab1:
-        with st.chat_message("assistant"):
-            st.markdown(st.session_state.screenplay)
+        st.markdown(st.session_state.screenplay)
 
         st.download_button(
             label="Download Screenplay",
@@ -207,16 +208,46 @@ if st.session_state.screenplay:
             mime="text/plain"
         )
 
+    # ---------------- CHARACTERS ----------------
     with tab2:
         if st.session_state.characters:
-            with st.chat_message("assistant"):
-                st.markdown(st.session_state.characters)
+            st.markdown(st.session_state.characters)
         else:
             st.info("Generate character profiles.")
 
+    # ---------------- DIRECTOR + STORYBOARD ----------------
     with tab3:
+
         if st.session_state.director:
-            with st.chat_message("assistant"):
+
+            st.markdown("## 🎬 AI Storyboard")
+
+            # Simple scene split (based on scene headings)
+            scenes = st.session_state.screenplay.split("INT.")
+            scenes = [s for s in scenes if s.strip() != ""]
+
+            for i, scene in enumerate(scenes):
+
+                st.markdown(f"### Scene {i+1}")
+
+                image_prompt = f"""
+Cinematic storyboard frame, film still,
+{genre} genre,
+{tone} tone,
+dramatic lighting,
+high detail,
+scene description:
+{scene[:400]}
+"""
+
+                with st.spinner("Generating cinematic frame..."):
+                    img_url = generate_image(image_prompt)
+
+                st.image(img_url, use_column_width=True)
+
+                st.markdown("#### 🎥 Director Notes")
                 st.markdown(st.session_state.director)
+                st.markdown("---")
+
         else:
-            st.info("Generate director breakdown.")
+            st.info("Generate director breakdown to create storyboard.")

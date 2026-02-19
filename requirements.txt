@@ -4,3 +4,6 @@ google-generativeai
 gunicorn
 reportlab
 python-docx
+streamlit
+google-generativeai
+replicate
