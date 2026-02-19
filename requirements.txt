@@ -1,7 +1,6 @@
 flask
-requests
+flask-session
+google-generativeai
+gunicorn
 reportlab
 python-docx
-Flask-Session
-streamlit
-google-generativeai
