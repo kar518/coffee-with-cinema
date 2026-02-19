@@ -21,7 +21,8 @@ client = replicate.Client()
 
 def generate_image(prompt):
     output = client.run(
-        "stability-ai/sdxl",
+        "stability-ai/stable-diffusion"
+,
         input={
             "prompt": prompt,
             "width": 768,
